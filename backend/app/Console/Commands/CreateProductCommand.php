@@ -54,7 +54,7 @@ class CreateProductCommand extends Command
         }
 
         $categories = Category::pluck('name', 'id')->toArray();
-        $selectedCategories = $this->choice('Select categories for the product (comma-separated):', $categories, null, null, true);
+        $selectedCategories = $this->choice('Select a category for the product', $categories, null, null, true);
         $categoryIds = Category::whereIn('name', $selectedCategories)->pluck('id')->toArray();
 
         $this->productRepository->create([

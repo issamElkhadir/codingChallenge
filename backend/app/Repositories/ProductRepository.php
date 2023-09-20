@@ -23,12 +23,18 @@ class ProductRepository
     {
         $query = Product::query();
         if ($sortBy) {
-            $query->orderBy($sortBy);
+            if($sortBy === "asc"){
+                $query->orderBy('price' , 'asc');
+            }elseif ($sortBy === "desc"){
+                $query->orderBy('price' , 'desc');
+            }else {
+                $query->orderBy($sortBy);
+            }
         }
     
         if ($categoryId) {
             $query->whereHas('categories', function ($query) use ($categoryId) {
-                $query->where('id', $categoryId);
+                $query->where('categories.id', $categoryId);
             });
         }
 

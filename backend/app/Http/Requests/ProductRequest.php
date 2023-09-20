@@ -27,7 +27,7 @@ class ProductRequest extends FormRequest
             'name' => 'required|string|max:255' ,
             'description' => 'required|string' ,
             'price' => 'required|numeric|min:0' ,
-            'image' => 'required' ,
+            'image' => 'nullable' ,
             'categories' => 'required|array'
         ];
     }
