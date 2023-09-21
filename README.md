@@ -107,3 +107,6 @@ The frontend should now be accessible at http://localhost:5173.
 3. Get categories:
    ```bash
    php artisan test --filter ProductControllerTest::it_can_get_categories
+
+## Troubleshooting
+- If you encounter any issues during installation or usage, please refer to our troubleshooting guide for solutions to common problems.
