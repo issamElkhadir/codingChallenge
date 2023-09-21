@@ -66,7 +66,6 @@ Ensure you have the following software installed:
    php artisan serve
    php artisan storage:link
 
-
 The backend should now be accessible at http://localhost:8000.
 
 7. Navigate to the frontend directory:
@@ -87,6 +86,11 @@ The frontend should now be accessible at http://localhost:5173.
 - To add a new product via the command line, use the following command:
    ```bash
    php artisan product:create {name} {price} {description?}
+- exemple :
+   description is optional
+   ```bash
+      php artisan product:create product_name 100 
+
    
 ## Routes :
 - Visit the product listing page at / to view and manage your products.
