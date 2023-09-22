@@ -24,6 +24,9 @@ Our application leverages the power of modern technologies:
 
 - **Frontend Framework:**
   - Vue.js 3 Composition API
+  
+- **Frontend Styling Framework:**
+  - Bootstrap 5
 
 ## Getting Started
 

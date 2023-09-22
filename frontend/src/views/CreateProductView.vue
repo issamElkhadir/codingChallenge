@@ -139,6 +139,7 @@ const submitForm = () => {
 const handleCategoryChange = (e) => {
   formData.value.selectedCategories.push(Number(e.target.value))
 }
+
 const handleImageChange = (event) => {
   const selectedFile = event.target.files[0];
   if (selectedFile) {

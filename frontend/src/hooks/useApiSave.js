@@ -1,7 +1,7 @@
 import axios from "axios";
 import {ref} from "vue";
 
-export function useApiSave(resource) {
+export function useApiSave(path) {
   
   const error = ref(null)
 
@@ -11,7 +11,7 @@ export function useApiSave(resource) {
     saving.value = true
 
     return await axios
-      .post(`${resource}` , payload)
+      .post(`${path}` , payload)
       .then((response) => {
         onSuccess && onSuccess(response.data)
 

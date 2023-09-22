@@ -1,7 +1,7 @@
 import axios from "axios";
 import {ref} from "vue";
 
-export function useApiGetResource(resource) {
+export function useApiGetResource(path) {
   
   const error = ref(null)
 
@@ -11,7 +11,7 @@ export function useApiGetResource(resource) {
     loading.value = true
 
     return await axios
-      .get(`${resource}` , { params: params })
+      .get(`${path}` , { params: params })
       .then((response) => {
         onSuccess && onSuccess(response.data)
 
