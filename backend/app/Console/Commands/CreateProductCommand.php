@@ -3,12 +3,14 @@
 namespace App\Console\Commands;
 
 use App\Models\Category;
+use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Console\Command;
 
 class CreateProductCommand extends Command
 {
     protected ProductRepository $productRepository;
+    protected CategoryRepository $categoryRepository;
     /**
      * The name and signature of the console command.
      *
@@ -30,10 +32,11 @@ class CreateProductCommand extends Command
      *
      * @return void
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         parent::__construct();
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -53,9 +56,9 @@ class CreateProductCommand extends Command
             return 1;
         }
 
-        $categories = Category::pluck('name', 'id')->toArray();
+        $categories = $this->categoryRepository->pluckCategories();
         $selectedCategories = $this->choice('Select a category for the product', $categories, null, null, true);
-        $categoryIds = Category::whereIn('name', $selectedCategories)->pluck('id')->toArray();
+        $categoryIds = $this->categoryRepository->getIdsByName($selectedCategories);
 
         $this->productRepository->create([
             'name' => $name,

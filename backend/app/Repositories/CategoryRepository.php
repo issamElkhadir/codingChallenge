@@ -23,4 +23,14 @@ class CategoryRepository
         $categories = $this->categoryModel->all();
         return $categories;
     }
+
+    public function pluckCategories()
+    {
+        return Category::pluck('name', 'id')->toArray();
+    }
+
+    public function getIdsByName(array $categoryNames)
+    {
+        return Category::whereIn('name', $categoryNames)->pluck('id')->toArray();
+    }
 }

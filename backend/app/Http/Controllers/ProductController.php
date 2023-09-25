@@ -6,6 +6,7 @@ use App\Repositories\ProductRepository;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -37,16 +38,14 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $productRequest)
+    public function store(ProductRequest $productRequest, ImageUploadService $imageUploadService)
     {
         try {
-           
             $validatedData = $productRequest->validated();
 
             if ($productRequest->hasFile('image')) {
                 $file = $productRequest->file('image');
-                $filename = uniqid() . $file->getClientOriginalName();
-                $file->move(public_path('storage/products/images'), $filename);
+                $filename = $imageUploadService->upload($file, 'storage/products/images');
                 $validatedData['image'] = $filename;
             }
 
