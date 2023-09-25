@@ -88,12 +88,7 @@ The frontend should now be accessible at http://localhost:5173.
 ## Command-Line Product Creation
 - To add a new product via the command line, use the following command:
    ```bash
-   php artisan product:create {name} {price} {description?}
-- exemple :
-   description is optional
-   ```bash
-      php artisan product:create product_name 100 
-
+   php artisan product:create 
    
 ## Routes :
 - Visit the product listing page at / to view and manage your products.
