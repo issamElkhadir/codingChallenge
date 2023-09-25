@@ -2,21 +2,22 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
+use App\Services\CreateProductValidationService;
 use Illuminate\Console\Command;
 
 class CreateProductCommand extends Command
 {
     protected ProductRepository $productRepository;
     protected CategoryRepository $categoryRepository;
+    protected CreateProductValidationService $createProductValidationService;
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'product:create {name} {price} {description?}';
+    protected $signature = 'product:create';
 
 
 
@@ -32,11 +33,12 @@ class CreateProductCommand extends Command
      *
      * @return void
      */
-    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository)
+    public function __construct(ProductRepository $productRepository, CategoryRepository $categoryRepository, CreateProductValidationService $createProductValidationService)
     {
         parent::__construct();
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->createProductValidationService = $createProductValidationService;
     }
 
     /**
@@ -46,19 +48,21 @@ class CreateProductCommand extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name');
-        $price = $this->argument('price');
-        $description = $this->argument('description') ?? '';
-        
-
-        if (!is_numeric($price)) {
-            $this->error('Price must be a numeric value.');
-            return 1;
-        }
-
+        $name = $this->ask('Enter the product name');
+        $price = $this->ask('Enter the product price');
+        $description = $this->ask('Enter the product description');
         $categories = $this->categoryRepository->pluckCategories();
         $selectedCategories = $this->choice('Select a category for the product', $categories, null, null, true);
         $categoryIds = $this->categoryRepository->getIdsByName($selectedCategories);
+
+        $data = [
+            'name' => $name,
+            'price' => $price,
+            'description' => $description,
+            'categories' => $categoryIds
+        ];
+
+        $this->createProductValidationService->validateProduct($data);
 
         $this->productRepository->create([
             'name' => $name,
