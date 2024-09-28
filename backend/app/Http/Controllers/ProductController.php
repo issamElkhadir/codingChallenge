@@ -14,7 +14,7 @@ class ProductController extends Controller
     protected ProductRepository $productRepository;
     protected CreateProductValidationService $createProductValidationService;
 
-    public function __construct(ProductRepository $productRepository, CreateProductValidationService $createProductValidationService) // Add the service as a dependency
+    public function __construct(ProductRepository $productRepository, CreateProductValidationService $createProductValidationService)
     {
         $this->productRepository = $productRepository;
         $this->createProductValidationService = $createProductValidationService;
